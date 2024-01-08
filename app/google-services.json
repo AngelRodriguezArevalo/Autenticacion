@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "180311644139",
+    "project_id": "login-ce39d",
+    "storage_bucket": "login-ce39d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180311644139:android:2cfd3cba871a14cb8debae",
+        "android_client_info": {
+          "package_name": "com.example.autenticacion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4pkUSAPXypc5klsD1g1XCVY0bBehhb_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
