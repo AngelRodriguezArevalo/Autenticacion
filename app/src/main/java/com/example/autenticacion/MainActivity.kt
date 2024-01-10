@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(this, Bienvenida::class.java)
                         startActivity(intent)
                     }else{
-                        Toast.makeText(this, "Correo o contraseña incorrecto", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Correo o contraseña incorrecto", Toast.LENGTH_LONG).show()
                     }
                 }
 

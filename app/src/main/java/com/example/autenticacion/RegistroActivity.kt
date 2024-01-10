@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.autenticacion.databinding.ActivityRegistroBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegistroActivity : AppCompatActivity() {
 
@@ -15,6 +16,8 @@ class RegistroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistroBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val db = FirebaseFirestore.getInstance()
 
         binding.bRegistrarRegistrar.setOnClickListener {
 
@@ -29,6 +32,16 @@ class RegistroActivity : AppCompatActivity() {
                     .addOnCompleteListener{
                         //si el usuario se ha registrado correctamente muestra la pantalla de bienvenida
                         if(it.isSuccessful){
+
+                            // registrar en la base de datos los datos del usuario
+
+                            db.collection("usuarios").document(binding.emailRegistro.text.toString())
+                                .set(mapOf(
+                                    "nombre" to binding.nombre.text.toString(),
+                                    "apellidos" to binding.apellidos.text.toString()
+                                ))
+
+                            Toast.makeText(this, "Se han registrado los datos con éxito", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, Bienvenida::class.java))
                         }
                         //si no, nos avisa del error

@@ -23,6 +23,35 @@ class Bienvenida : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
+        // AÑADIR UN NUEVO COCHE CONOCIENDO SU IDENTIFICADOR id (matrícula)
+
+        binding.botonGuardarCoche.setOnClickListener {
+            if (binding.marcaCoche.text.isNotEmpty() &&
+                binding.matriculaCoche.text.isNotEmpty() &&
+                binding.modeloCoche.text.isNotEmpty()&&
+                binding.colorCoche.text.isNotEmpty()){
+
+                db.collection("coches").document(binding.matriculaCoche.text.toString())
+                    .set(mapOf(
+                        "color" to binding.colorCoche.text.toString(),
+                        "marca" to binding.marcaCoche.text.toString(),
+                        "modelo" to binding.modeloCoche.text.toString()
+                    ))
+                Toast.makeText(this , "El coche se ha registrado con éxito", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this , "Algún campo está vacío", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // ELIMINAR UN REGISTRO SABIENDO SU ID (matricula)
+
+        binding.botonEliminarCoche.setOnClickListener {
+            db.collection("coches")
+                .document(binding.matriculaCoche.text.toString())
+                .delete()
+        }
+
+        /*
         binding.botonGuardarCoche.setOnClickListener {
             if (binding.marcaCoche.text.isNotEmpty() &&
                 binding.matriculaCoche.text.isNotEmpty() &&
@@ -30,10 +59,10 @@ class Bienvenida : AppCompatActivity() {
                 binding.colorCoche.text.isNotEmpty()){
 
                 db.collection("coches").add(mapOf(
-                    "color" to binding.colorCoche.text,
-                    "marca" to binding.marcaCoche.text,
-                    "matricula" to binding.matriculaCoche.text,
-                    "modelo" to binding.modeloCoche.text
+                    "color" to binding.colorCoche.text.toString(),
+                    "marca" to binding.marcaCoche.text.toString(),
+                    "matricula" to binding.matriculaCoche.text.toString(),
+                    "modelo" to binding.modeloCoche.text.toString()
                 ))
 
                     .addOnSuccessListener { documento ->
@@ -47,6 +76,33 @@ class Bienvenida : AppCompatActivity() {
                 Toast.makeText(this , "Algún campo está vacío", Toast.LENGTH_SHORT).show()
             }
         }
+
+
+         */
+        binding.botonEditarCoche.setOnClickListener {
+            db.collection("coches")
+                .whereEqualTo("matricula", binding.matriculaCoche.text.toString())
+                .get().addOnSuccessListener {
+                    it.forEach{
+                        binding.marcaCoche.setText(it.get("marca") as String?)
+                        binding.modeloCoche.setText(it.get("modelo") as String?)
+                        binding.colorCoche.setText(it.get("color") as String?)
+                    }
+                }
+        }
+
+        /*
+        binding.botonEliminarCoche.setOnClickListener {
+            db.collection("coches")
+                .get()
+                .addOnSuccessListener {
+                    it.forEach{
+                        it.reference.delete()
+                    }
+                }
+        }
+
+         */
     }
 
 
